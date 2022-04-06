@@ -1,0 +1,3 @@
+su -
+mount -t vboxsf -o uid=oracle,gid=oracle dwh /home/oracle/share
+
