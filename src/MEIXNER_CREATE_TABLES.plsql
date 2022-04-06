@@ -9,17 +9,23 @@ BEGIN
 
   if v_tabcnt = 0 then
       EXECUTE IMMEDIATE
-            'CREATE TABLE FACT_MEIXNER_RIDES_STAGING
-            (
-                SALES_DATE     DATE    NOT NULL,
-                SALES_TIME     INTEGER NOT NULL,
-                SALES_CHANNEL  INTEGER NOT NULL,
-                PRODUCT_ID     INTEGER NOT NULL,
-                CUSTOMER_ID    INTEGER NOT NULL,
-                PIECES         INTEGER NOT NULL,
-                REVENUE        DECIMAL(12,2) NOT NULL,
-                DISCOUNT       DECIMAL(12,2) NOT NULL,
-                TAX            DECIMAL(12,2) NOT NULL
+            'CREATE TABLE FACT_MEIXNER_RIDES_STAGING(
+                VendorID int NOT NULL,
+                tpep_pickup_datetime datetime NOT NULL,
+                tpep_dropoff_datetime datetime NOT NULL,
+                passenger_count int NOT NULL,
+                trip_distance decimal(18, 0) NOT NULL,
+                RatecodeID int NOT NULL,
+                store_and_fwd_flag varchar(1) NOT NULL,
+                payment_type int NOT NULL,
+                fare_amount decimal(18, 0) NOT NULL,
+                extra decimal(18, 0) NOT NULL,
+                mta_tax decimal(18, 0) NOT NULL,
+                tip_amount decimal(18, 0) NOT NULL,
+                tolls_amount decimal(18, 0) NOT NULL,
+                improvement_surcharge decimal(18, 0) NOT NULL,
+                total_amount decimal(18, 0) NOT NULL,
+                congestion_surcharge decimal(18, 0) NOT NULL
             )';
   end if;
 
@@ -32,18 +38,24 @@ BEGIN
 
   if v_tabcnt = 0 then
       EXECUTE IMMEDIATE
-            'CREATE TABLE FACT_MEIXNER_RIDES
-            (
-                SALES_DATE     DATE    NOT NULL,
-                SALES_TIME     INTEGER NOT NULL,
-                SALES_CHANNEL  INTEGER NOT NULL,
-                PRODUCT_ID     INTEGER NOT NULL,
-                CUSTOMER_ID    INTEGER NOT NULL,
-                PIECES         INTEGER NOT NULL,
-                REVENUE        DECIMAL(12,2) NOT NULL,
-                DISCOUNT       DECIMAL(12,2) NOT NULL,
-                TAX            DECIMAL(12,2) NOT NULL,
-                ACTUAL_TEMP    DECIMAL(5,2)  NOT NULL,
+            'CREATE TABLE FACT_MEIXNER_RIDES(
+                VendorID int NOT NULL,
+                tpep_pickup_datetime datetime NOT NULL,
+                tpep_dropoff_datetime datetime NOT NULL,
+                passenger_count int NOT NULL,
+                trip_distance decimal(18, 0) NOT NULL,
+                RatecodeID int NOT NULL,
+                store_and_fwd_flag varchar(1) NOT NULL,
+                payment_type int NOT NULL,
+                fare_amount decimal(18, 0) NOT NULL,
+                extra decimal(18, 0) NOT NULL,
+                mta_tax decimal(18, 0) NOT NULL,
+                tip_amount decimal(18, 0) NOT NULL,
+                tolls_amount decimal(18, 0) NOT NULL,
+                improvement_surcharge decimal(18, 0) NOT NULL,
+                total_amount decimal(18, 0) NOT NULL,
+                congestion_surcharge decimal(18, 0) NOT NULL,
+                actual_temp decimal(5,2) NOT NULL
             )';
   end if;
 END;
