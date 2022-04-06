@@ -35,15 +35,22 @@ do
 
     sqlplus meixner/oracle <<!
       INSERT INTO FACT_MEIXNER_RIDES
-      SELECT DATE,
-             TIME,
-             CHANNEL,
-             PRODUCT_ID,
-             CUSTOMER_ID,
-             sum(PIECES),
-             sum(REVENUE),
-             sum(DISCOUNT),
-             sum(TAX),
+      SELECT VendorID,
+             tpep_pickup_datetime,
+             tpep_dropoff_datetime,
+             passenger_count,
+             trip_distance,
+             RatecodeID,
+             store_and_fwd_flag,
+             payment_type,
+             fare_amount,
+             extra,
+             mta_tax,
+             tip_amount,
+             tolls_amount,
+             improvement_surcharge,
+             total_amount,
+             congestion_surcharge,
              $ACT_TEMP
       FROM   FACT_MEIXNER_RIDES_STAGING
       GROUP BY DATE, SALES_TIME, SALES_CHANNEL, PRODUCT_ID, CUSTOMER_ID;
