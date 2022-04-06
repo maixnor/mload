@@ -5,7 +5,7 @@ sqlplus meixner/oracle @MEIXNER_CREATE_TABLES.plsql
 sqlplus meixner/oracle @MEIXNER_CREATE_TABLES.sql
 sqlplus system/oracle @MEIXNER_RIGHTS.sql
 
-for FILE_NAME in `ls ../data/split_*.csv`
+for FILE_NAME in ../data/split_*.csv
 do
     export BASE_NAME=`basename $FILE_NAME`
     export JUST_NAME=`echo $BASE_NAME | sed -e 's/\..*//'`
