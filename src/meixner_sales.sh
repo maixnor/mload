@@ -1,8 +1,8 @@
 #!/bin/bash
 
 sqlplus system/oracle @MEIXNER_CREATE_USER.sql
-sqlplus griesmayer/oracle @MEIXNER_CREATE_TABLES.plsql
-sqlplus griesmayer/oracle @MEIXNER_CREATE_TABLES.sql
+sqlplus meixner/oracle @MEIXNER_CREATE_TABLES.plsql
+sqlplus meixner/oracle @MEIXNER_CREATE_TABLES.sql
 sqlplus system/oracle @MEIXNER_RIGHTS.sql
 
 for FILE_NAME in `ls ../data/split_*.csv`
@@ -22,7 +22,7 @@ do
        exit 16
     fi
 
-    sqlldr griesmayer/oracle skip=1 data=../data/RIDES_MEIXNER.csv control=griesmayer_sales_staging.ldr log=../log/$JUST_NAME.log bad=../log/$JUST_NAME.bad errors=20
+    sqlldr meixner/oracle skip=1 data=../data/RIDES_MEIXNER.csv control=meixner_sales_staging.ldr log=../log/$JUST_NAME.log bad=../log/$JUST_NAME.bad errors=20
 
     if [ $? -ne 0 ]
     then
@@ -33,7 +33,7 @@ do
 
     export ACT_TEMP=`curl -k https://wetter.orf.at/oes/ | grep 'temperature' | head -n 1 | sed -e 's/[^>]*>//' | sed -e 's/&thinsp;.*//' | sed -e 's/&minus;/-/' | sed -e 's/,/./'`
 
-    sqlplus griesmayer/oracle <<!
+    sqlplus meixner/oracle <<!
       INSERT INTO FACT_MEIXNER_RIDES
       SELECT DATE,
              TIME,

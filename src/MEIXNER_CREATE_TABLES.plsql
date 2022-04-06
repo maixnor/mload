@@ -1,98 +1,15 @@
-CREATE OR REPLACE PROCEDURE PROC_MEIXNER_CREATE_TABLES (SCHEMA_NAME IN VARCHAR2) IS
+CREATE OR REPLACE PROCEDURE PROC_MEIXNER_CREATE_TABLES IS
   v_tabcnt number;
 BEGIN
-  SELECT count(*) into v_tabcnt
-  FROM   ALL_TABLES
-  WHERE  OWNER = SCHEMA_NAME and
-         TABLE_NAME = 'DIM_PRODUCT';
-
-  if v_tabcnt = 0 then
-      EXECUTE IMMEDIATE
-            'CREATE TABLE ' || SCHEMA_NAME || '.DIM_PRODUCT
-            (
-                PRODUCT_ID     INTEGER      NOT NULL,
-                PRODUCT_NAME   VARCHAR2(30) NOT NULL
-            )';
-  end if;
-  
-  
-  
-  SELECT count(*) into v_tabcnt
-  FROM   ALL_TABLES
-  WHERE  OWNER = SCHEMA_NAME and
-         TABLE_NAME = 'DIM_SALES_CHANNEL';
-
-  if v_tabcnt = 0 then
-      EXECUTE IMMEDIATE
-            'CREATE TABLE ' || SCHEMA_NAME || '.DIM_SALES_CHANNEL
-            (
-                SALES_CHANNEL  INTEGER      NOT NULL,
-                CHANNEL        VARCHAR2(30) NOT NULL
-            )';
-  end if;
-
-
 
   SELECT count(*) into v_tabcnt
   FROM   ALL_TABLES
   WHERE  OWNER = SCHEMA_NAME and
-         TABLE_NAME = 'DIM_SALES_TIME';
+         TABLE_NAME = 'FACT_MEIXNER_RIDES_STAGING';
 
   if v_tabcnt = 0 then
       EXECUTE IMMEDIATE
-            'CREATE TABLE ' || SCHEMA_NAME || '.DIM_SALES_TIME
-            (
-                SALES_HOUR  INTEGER      NOT NULL,
-                TIME_OF_DAY VARCHAR2(30) NOT NULL
-            )';
-  end if;
-
-
-
-  SELECT count(*) into v_tabcnt
-  FROM   ALL_TABLES
-  WHERE  OWNER = SCHEMA_NAME and
-         TABLE_NAME = 'DIM_SALES_TIME';
-
-  if v_tabcnt = 0 then
-      EXECUTE IMMEDIATE
-            'CREATE TABLE ' || SCHEMA_NAME || '.DIM_SALES_TIME
-            (
-                SALES_HOUR  INTEGER      NOT NULL,
-                TIME_OF_DAY VARCHAR2(30) NOT NULL
-            )';
-  end if;
-
-
-
-  SELECT count(*) into v_tabcnt
-  FROM   ALL_TABLES
-  WHERE  OWNER = SCHEMA_NAME and
-         TABLE_NAME = 'DIM_CUSTOMER';
-
-  if v_tabcnt = 0 then
-      EXECUTE IMMEDIATE
-            'CREATE TABLE ' || SCHEMA_NAME || '.DIM_CUSTOMER
-            (
-                CUSTOMER_ID INTEGER NOT NULL,
-                FIRST_NAME VARCHAR2(30) NOT NULL,
-                LAST_NAME  VARCHAR2(30) NOT NULL,
-                GENDER     VARCHAR2(30) NOT NULL,
-                COUNTRY    VARCHAR2(30) NOT NULL,
-                CITY       VARCHAR2(30) NOT NULL
-            )';
-  end if;
-
-
-
-  SELECT count(*) into v_tabcnt
-  FROM   ALL_TABLES
-  WHERE  OWNER = SCHEMA_NAME and
-         TABLE_NAME = 'FACT_MEIXNER_SALES_STAGING';
-
-  if v_tabcnt = 0 then
-      EXECUTE IMMEDIATE
-            'CREATE TABLE ' || SCHEMA_NAME || '.FACT_MEIXNER_SALES_STAGING
+            'CREATE TABLE FACT_MEIXNER_RIDES_STAGING
             (
                 SALES_DATE     DATE    NOT NULL,
                 SALES_TIME     INTEGER NOT NULL,
@@ -111,11 +28,11 @@ BEGIN
   SELECT count(*) into v_tabcnt
   FROM   ALL_TABLES
   WHERE  OWNER = SCHEMA_NAME and
-         TABLE_NAME = 'FACT_MEIXNER_SALES';
+         TABLE_NAME = 'FACT_MEIXNER_RIDES';
 
   if v_tabcnt = 0 then
       EXECUTE IMMEDIATE
-            'CREATE TABLE ' || SCHEMA_NAME || '.FACT_MEIXNER_SALES
+            'CREATE TABLE FACT_MEIXNER_RIDES
             (
                 SALES_DATE     DATE    NOT NULL,
                 SALES_TIME     INTEGER NOT NULL,
@@ -127,7 +44,6 @@ BEGIN
                 DISCOUNT       DECIMAL(12,2) NOT NULL,
                 TAX            DECIMAL(12,2) NOT NULL,
                 ACTUAL_TEMP    DECIMAL(5,2)  NOT NULL,
-                CONSTRAINT PK_FACT_MEIXNER_SALES PRIMARY KEY (SALES_DATE, SALES_TIME, SALES_CHANNEL, PRODUCT_ID, CUSTOMER_ID)
             )';
   end if;
 END;
